@@ -23,9 +23,6 @@ public class WeaponManager : MonoBehaviour
         yield return new WaitForSeconds(.25f);
         if(StateManager.currentWeapon != 0)
             myWeapons[StateManager.currentWeapon - 1].gameObject.SetActive(true);
-
-        StateManager.isChangingWeapon = false;
-
         print("Is Changing Weapon " + StateManager.isChangingWeapon);
     }
 

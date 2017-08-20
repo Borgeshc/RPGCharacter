@@ -46,6 +46,7 @@ public class InputManager : MonoBehaviour
         {
             if(!StateManager.isChangingWeapon)
             {
+                StateManager.isChangingWeapon = true;
                 StateManager.previousWeapon = currentWeapon;
 
                 if (currentWeapon + 1 < weaponManager.amountOfWeapons + 1)
@@ -54,16 +55,15 @@ public class InputManager : MonoBehaviour
                     currentWeapon = 0;
 
                 StateManager.currentWeapon = currentWeapon;
-                StateManager.isChangingWeapon = true;
                 StartCoroutine(weaponManager.ChangeWeapon());
             }
         }
-
-        if (inputDevice.LeftBumper.WasPressed && !StateManager.isAttacking && !StateManager.isBlocking)
+        else if (inputDevice.LeftBumper.WasPressed && !StateManager.isAttacking && !StateManager.isBlocking)
         {
       
             if (!StateManager.isChangingWeapon)
             {
+                StateManager.isChangingWeapon = true;
                 StateManager.previousWeapon = currentWeapon;
 
                 if (currentWeapon - 1 >= 0)
@@ -72,7 +72,6 @@ public class InputManager : MonoBehaviour
                     currentWeapon = weaponManager.amountOfWeapons;
 
                 StateManager.currentWeapon = currentWeapon;
-                StateManager.isChangingWeapon = true;
                 StartCoroutine(weaponManager.ChangeWeapon());
             }
         }

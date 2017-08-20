@@ -6,7 +6,6 @@ public class PlayerAnimations : MonoBehaviour
 {
     WeaponManager weaponManager;
     Animator anim;
-    Coroutine changeWeapon;
 
     bool attacking;
     bool hasDied;
@@ -29,14 +28,10 @@ public class PlayerAnimations : MonoBehaviour
             Died();
         else if(StateManager.isDead) return;
 
-        if(!changingWeapon)
+        if(StateManager.isChangingWeapon && !changingWeapon)
         {
             changingWeapon = true;
-            if (changeWeapon != null)
-                StopCoroutine(changeWeapon);
-
-            anim.SetBool("Sheath", false);
-            changeWeapon = StartCoroutine(ChangeWeapon());
+            StartCoroutine(ChangeWeapon());
         }
 
         print("Sheath " + anim.GetBool("Sheath"));
@@ -93,6 +88,7 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetBool("Sheath", false);
 
         yield return new WaitForSeconds(.25f);
+        StateManager.isChangingWeapon = false;
         changingWeapon = false;
     }
 

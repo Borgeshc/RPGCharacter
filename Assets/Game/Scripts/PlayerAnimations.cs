@@ -78,22 +78,12 @@ public class PlayerAnimations : MonoBehaviour
 
     IEnumerator ChangeWeapon()
     {
-        if (StateManager.currentWeapon != 0)
-        {
-            anim.SetBool("Sheath", true);
+        anim.SetBool("Sheath", true);
 
-            yield return new WaitForSeconds(.5f);
-        }
-
-        if(StateManager.previousWeapon == 0)
-            anim.SetLayerWeight(StateManager.previousWeapon + 1, .5f);
-        else
-            anim.SetLayerWeight(StateManager.previousWeapon + 1, 0);
-
+        yield return new WaitForSeconds(.5f);
+        anim.SetLayerWeight(StateManager.previousWeapon + 1, 0);
         anim.SetLayerWeight(StateManager.currentWeapon + 1, 1);
-
-        if (StateManager.currentWeapon != 0)
-            anim.SetBool("Sheath", false);
+        anim.SetBool("Sheath", false);
 
         yield return new WaitForSeconds(.5f);
         changingWeapon = false;

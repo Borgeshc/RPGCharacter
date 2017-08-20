@@ -2392,6 +2392,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102570646139396112}
   m_Solo: 0
@@ -5596,6 +5599,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102816712679943532}
   m_Solo: 0
@@ -5697,6 +5703,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102816712679943532}
@@ -6318,6 +6327,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102599514355484782}
@@ -7828,6 +7840,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102347435475436490}
   m_Solo: 0
@@ -8411,7 +8426,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Sheath
+    m_ConditionEvent: ChangingWeapon
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102347435475436490}
@@ -10209,6 +10224,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102726425669689482}
@@ -13477,6 +13495,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102570646139396112}
   m_Solo: 0
@@ -14208,6 +14229,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102077670742469596}
@@ -15427,6 +15451,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102726425669689482}
   m_Solo: 0
@@ -16492,6 +16519,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102599514355484782}
   m_Solo: 0
@@ -17154,6 +17184,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: Sheath
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: ChangingWeapon
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102077670742469596}
@@ -21899,7 +21932,7 @@ AnimatorStateMachine:
     m_Position: {x: 264, y: 132, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102816712679943532}
-    m_Position: {x: 264, y: -48, z: 0}
+    m_Position: {x: 480, y: -240, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102363563276726406}
     m_Position: {x: 264, y: 240, z: 0}

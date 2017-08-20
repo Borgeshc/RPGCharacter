@@ -1209,7 +1209,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1172208873786168}
   m_LocalRotation: {x: -0, y: 0.70710707, z: -0, w: 0.70710653}
-  m_LocalPosition: {x: -30.21, y: 0, z: 9.54}
+  m_LocalPosition: {x: -719.4601, y: 7.695486, z: -1090.8932}
   m_LocalScale: {x: 400, y: 400, z: 400}
   m_Children:
   - {fileID: 4526286027128574}
@@ -2002,6 +2002,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a71fd67b92b1ea4d936d48dd0d13e93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 10
+  healthBar: {fileID: 114712696004677222}
+  regularCombatText: {fileID: 114049297676970116}
+  criticalCombatText: {fileID: 114080936888613550}
+  hurtSounds: []
 --- !u!114 &114237562007740568
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2088,6 +2093,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb438da0a34098f48b3050c249f22665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
+  attackSpeed: 0
+  rotationSpeed: 0
+  aggroDistance: 0
+  attackDistance: 0
+  resetDistance: 0
+  minAttackFrequency: 0
+  maxAttackFrequency: 0
+  minDamage: 0
+  maxDamage: 0
+  critChance: 0
+  canShakeCam: 0
+  attackSounds: []
 --- !u!136 &136908792381655530
 CapsuleCollider:
   m_ObjectHideFlags: 1

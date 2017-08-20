@@ -20,25 +20,22 @@ public class InputManager : MonoBehaviour
         inputDevice = InControl.InputManager.ActiveDevice;
         SetMovementValues();
 
-        if (inputDevice.LeftStick != Vector3.zero)
+        if (inputDevice.LeftStick != Vector3.zero && !StateManager.isBlocking && !StateManager.isSprinting && !StateManager.isAttacking && !StateManager.isKicking)
             StateManager.isMoving = true;
         else
             StateManager.isMoving = false;
 
-        if (inputDevice.LeftStick == Vector3.zero)
+        if (inputDevice.LeftStick == Vector3.zero && !StateManager.isAttacking && !StateManager.isKicking && !StateManager.isSprinting)
             StateManager.isIdle = true;
         else
             StateManager.isIdle = false;
 
-        if (inputDevice.LeftStick != Vector3.zero && inputDevice.LeftStickButton.IsPressed)
+        if (inputDevice.LeftStick != Vector3.zero && inputDevice.LeftStickButton.IsPressed && !StateManager.isBlocking && !StateManager.isAttacking && !StateManager.isKicking)
             StateManager.isSprinting = true;
         else
             StateManager.isSprinting = false;
 
-        if (inputDevice.RightStickDown)
-            StateManager.isCrouching = !StateManager.isCrouching;
-
-        if (inputDevice.RightBumper.WasPressed && !StateManager.isAttacking)
+        if (inputDevice.RightBumper.WasPressed && !StateManager.isAttacking && !StateManager.isBlocking)
         {
             StateManager.previousWeapon = currentWeapon;
 
@@ -51,7 +48,7 @@ public class InputManager : MonoBehaviour
             weaponManager.ChangeWeapon();
         }
 
-        if (inputDevice.LeftBumper.WasPressed && !StateManager.isAttacking)
+        if (inputDevice.LeftBumper.WasPressed && !StateManager.isAttacking && !StateManager.isBlocking)
         {
             StateManager.previousWeapon = currentWeapon;
 
@@ -69,17 +66,22 @@ public class InputManager : MonoBehaviour
         else
             StateManager.isArmed = true;
 
-        if(inputDevice.Action3.IsPressed && !StateManager.isAttacking && !StateManager.isKicking)
+        if(inputDevice.Action3.IsPressed && !StateManager.isAttacking && !StateManager.isKicking && !StateManager.isBlocking)
         {
             StateManager.isAttacking = true;
             StartCoroutine(GlobalCooldown());
         }
 
-        if (inputDevice.Action4.IsPressed && !StateManager.isAttacking && !StateManager.isKicking)
+        if (inputDevice.Action4.IsPressed && !StateManager.isAttacking && !StateManager.isKicking && !StateManager.isBlocking)
         {
             StateManager.isKicking = true;
             StartCoroutine(GlobalCooldown());
         }
+
+        if (inputDevice.Action2.IsPressed && StateManager.isIdle && !StateManager.isAttacking && !StateManager.isKicking)
+            StateManager.isBlocking = true;
+        else
+            StateManager.isBlocking = false;
     }
 
     void SetMovementValues()

@@ -5,209 +5,211 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-//    public float speed;
-//    public float attackSpeed;
-//    public float rotationSpeed;
-//    public float aggroDistance;
-//    public float attackDistance;
-//    public float resetDistance;
-//    public float minAttackFrequency;
-//    public float maxAttackFrequency;
-//    public float minDamage;
-//    public float maxDamage;
-//    public int critChance;
-//    public bool canShakeCam;
-//    public AudioClip[] attackSounds;
+    public float speed;
+    public float attackSpeed;
+    public float rotationSpeed;
+    public float aggroDistance;
+    public float attackDistance;
+    public float resetDistance;
+    public float minAttackFrequency;
+    public float maxAttackFrequency;
+    public float minDamage;
+    public float maxDamage;
+    public int critChance;
+    public bool canShakeCam;
+    public AudioClip[] attackSounds;
 
-//    float attackFrequency;
+    float attackFrequency;
 
-//    GameObject player;
-//    NavMeshAgent agent;
-//    Animator anim;
-//    Coroutine startAttacking;
-//    CameraShake cameraShake;
-//    AudioSource source;
+    GameObject player;
+    NavMeshAgent agent;
+    Animator anim;
+    Coroutine startAttacking;
+    CameraShake cameraShake;
+    AudioSource source;
 
-//    int attackChosen;
-//    int stateChangeRate;
-//    int state;
-//    int timer;
+    int attackChosen;
+    int stateChangeRate;
+    int state;
+    int timer;
 
-//    bool waiting;
-//    bool changeState;
-//    bool isDead;
-//    bool aggrod;
-//    bool attacking;
+    bool waiting;
+    bool changeState;
+    bool isDead;
+    bool aggrod;
+    bool attacking;
 
-//    private void Start()
-//    {
-//        player = GameObject.Find("Player");
-//        anim = GetComponent<Animator>();
-//        agent = GetComponent<NavMeshAgent>();
-//        cameraShake = Camera.main.GetComponent<CameraShake>();
-//        source = GetComponent<AudioSource>();
-//        stateChangeRate = 3;
-//    }
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+        anim = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
+        cameraShake = Camera.main.transform.parent.GetComponent<CameraShake>();
+        source = GetComponent<AudioSource>();
+        stateChangeRate = 3;
+    }
 
-//    private void Update()
-//    {
-//        if (isDead) return;
+    private void Update()
+    {
+        if (isDead) return;
 
-//        if (player != null  && !PlayerManager.isDead && Vector3.Distance(transform.position, player.transform.position) < aggroDistance)
-//        {
-//            aggrod = true;
-//        }
+        if (player != null && !StateManager.isDead && Vector3.Distance(transform.position, player.transform.position) < aggroDistance)
+        {
+            aggrod = true;
+        }
 
-//        if (player != null && !PlayerManager.isDead && Vector3.Distance(transform.position, player.transform.position) > resetDistance)
-//        {
-//            ResetPathingBehaviour();
-//        }
+        if (player != null && !StateManager.isDead && Vector3.Distance(transform.position, player.transform.position) > resetDistance)
+        {
+            ResetPathingBehaviour();
+        }
 
-//        if (aggrod)
-//        {
-//            Attack();
-//            return;
-//        }
+        if (aggrod)
+        {
+            Attack();
+            return;
+        }
 
-//        timer = (int)Time.time;
+        timer = (int)Time.time;
 
-//        if (timer % stateChangeRate == 0 && timer != 0)
-//        {
-//            stateChangeRate = Random.Range(1, 10);
-//            changeState = true;
-//            state = Random.Range(0, 2);
-//            if(!waiting)
-//            {
-//                waiting = true;
-//                StartCoroutine(Wait());
-//            }
-//        }
+        if (timer % stateChangeRate == 0 && timer != 0)
+        {
+            stateChangeRate = Random.Range(1, 10);
+            changeState = true;
+            state = Random.Range(0, 2);
+            if (!waiting)
+            {
+                waiting = true;
+                StartCoroutine(Wait());
+            }
+        }
 
-//        switch(state)
-//        {
-//            case 0:
-//                Idle();
-//                break;
-//            case 1:
-//                Walk();
-//                break;
-//        }
-//    }
+        switch (state)
+        {
+            case 0:
+                Idle();
+                break;
+            case 1:
+                Walk();
+                break;
+        }
+    }
 
-//    IEnumerator Wait()
-//    {
-//        yield return new WaitForSeconds(1);
-//        waiting = false;
-//    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1);
+        waiting = false;
+    }
 
-//    void Idle()
-//    {
-//        anim.SetBool("IsIdle", true);
-//    }
+    void Idle()
+    {
+        anim.SetBool("IsIdle", true);
+    }
 
-//    void Walk()
-//    {
-//        anim.SetBool("IsIdle", false);
-//        if(changeState)
-//        {
-//            changeState = false;
-//            transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-//        }
-//        transform.position += (transform.forward * speed * Time.deltaTime);
-//    }
+    void Walk()
+    {
+        anim.SetBool("IsIdle", false);
+        if (changeState)
+        {
+            changeState = false;
+            transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
+        }
+        transform.position += (transform.forward * speed * Time.deltaTime);
+    }
 
-//    public void WalkSound(AudioClip walkSound)
-//    {
-//        source.PlayOneShot(walkSound);
-//    }
+    public void WalkSound(AudioClip walkSound)
+    {
+        source.PlayOneShot(walkSound);
+    }
 
-//    void Attack()
-//    {
-//        if (player == null || isDead) return;
+    void Attack()
+    {
+        if (player == null || isDead) return;
 
-//        agent.SetDestination(player.transform.position);
+        agent.SetDestination(player.transform.position);
 
-//        if (Vector3.Distance(transform.position, player.transform.position) <= attackDistance)
-//        {
-//            anim.SetBool("IsIdle", true);
-//            agent.velocity = Vector3.zero;
-//            if(!attacking)
-//            {
-//                attacking = true;
-//                startAttacking = StartCoroutine(StartAttacking());
-//            }
-//        }
-//        else
-//        {
-//            StopAttacking();
-//            anim.SetBool("IsIdle", false);
-//            agent.speed = attackSpeed;
-//        }
-//    }
+        if (Vector3.Distance(transform.position, player.transform.position) <= attackDistance)
+        {
+            anim.SetBool("IsIdle", true);
+            agent.velocity = Vector3.zero;
+            if (!attacking)
+            {
+                attacking = true;
+                startAttacking = StartCoroutine(StartAttacking());
+            }
+        }
+        else
+        {
+            StopAttacking();
+            anim.SetBool("IsIdle", false);
+            agent.speed = attackSpeed;
+        }
+    }
 
-//    IEnumerator StartAttacking()
-//    {
-//        attackChosen = Random.Range(1, 4);
-//        anim.SetInteger("Attack", attackChosen);
-//        yield return new WaitForSeconds(.5f);
+    IEnumerator StartAttacking()
+    {
+        attackChosen = Random.Range(1, 4);
+        anim.SetInteger("Attack", attackChosen);
+        yield return new WaitForSeconds(.5f);
 
-//        anim.SetInteger("Attack", 0);
+        anim.SetInteger("Attack", 0);
 
-//        attackFrequency = Random.Range(minAttackFrequency, maxAttackFrequency);
-//        yield return new WaitForSeconds(attackFrequency);
-//        anim.SetInteger("Attack", 0);
-//        attacking = false;
-//    }
+        attackFrequency = Random.Range(minAttackFrequency, maxAttackFrequency);
+        yield return new WaitForSeconds(attackFrequency);
+        anim.SetInteger("Attack", 0);
+        attacking = false;
+    }
 
-//    void StopAttacking()
-//    {
-//        if (startAttacking != null)
-//            StopCoroutine(startAttacking);
+    void StopAttacking()
+    {
+        if (startAttacking != null)
+            StopCoroutine(startAttacking);
 
-//        anim.SetInteger("Attack", 0);
-//        attacking = false;
-//    }
+        anim.SetInteger("Attack", 0);
+        attacking = false;
+    }
 
-//    public void Damage()
-//    {
-//        player.GetComponent<PlayerHealth>().TookDamage((int)Random.Range(minDamage, maxDamage), critChance);
-//        source.PlayOneShot(attackSounds[attackChosen]);
+    public void Damage()
+    {
+        player.GetComponent<PlayerHealth>().TookDamage((int)Random.Range(minDamage, maxDamage), critChance);
 
-//        if (canShakeCam)
-//            ShakeCam();
+        if(attackSounds.Length > 0)
+        source.PlayOneShot(attackSounds[attackChosen]);
 
-//        if (PlayerManager.isDead)
-//        {
-//            ResetPathingBehaviour();
-//        }
-//    }
+        if (canShakeCam)
+            ShakeCam();
 
-//    void ResetPathingBehaviour()
-//    {
-//        aggrod = false;
-//        StopAttacking();
-//        agent.SetDestination(transform.position);
-//        agent.speed = 0;
-//        agent.velocity = Vector3.zero;
-//    }
+        if (StateManager.isDead)
+        {
+            ResetPathingBehaviour();
+        }
+    }
 
-//    public void Pulled()
-//    {
-//        aggrod = true;
-//    }
+    void ResetPathingBehaviour()
+    {
+        aggrod = false;
+        StopAttacking();
+        agent.SetDestination(transform.position);
+        agent.speed = 0;
+        agent.velocity = Vector3.zero;
+    }
 
-//    public void Died()
-//    {
-//        isDead = true;
-//        agent.SetDestination(transform.position);
-//        agent.speed = 0;
-//        agent.velocity = Vector3.zero;
-//        anim.SetBool("IsIdle", true);
-//    }
+    public void Pulled()
+    {
+        aggrod = true;
+    }
 
-//    void ShakeCam()
-//    {
-//        if (cameraShake != null)
-//            cameraShake.DoShake();
-//    }
+    public void Died()
+    {
+        isDead = true;
+        agent.SetDestination(transform.position);
+        agent.speed = 0;
+        agent.velocity = Vector3.zero;
+        anim.SetBool("IsIdle", true);
+    }
+
+    void ShakeCam()
+    {
+        if (cameraShake != null)
+            cameraShake.DoShake();
+    }
 }

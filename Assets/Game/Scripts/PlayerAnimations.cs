@@ -8,6 +8,9 @@ public class PlayerAnimations : MonoBehaviour
     Animator anim;
 
     bool attacking;
+    bool hasDied;
+    bool hasRevived;
+    bool beingHit;
 
     private void Start()
     {
@@ -17,18 +20,30 @@ public class PlayerAnimations : MonoBehaviour
 
     private void Update()
     {
-        if (StateManager.isIdle && !StateManager.isAttacking && !StateManager.isKicking)
-            Idle();
+        if (StateManager.timeToRevive && !hasRevived)
+            Revive();
 
-        if (StateManager.isMoving && !StateManager.isAttacking && !StateManager.isKicking)
-            Moving();
+        if (StateManager.isDead && !hasDied)
+            Died();
+        else if(StateManager.isDead) return;
 
-        if (StateManager.isSprinting && !StateManager.isAttacking && !StateManager.isKicking)
-            Sprinting();
-
+        SetMovementState();
         ChangeWeapon();
-        
-        if(StateManager.isAttacking && !attacking && StateManager.isArmed && !StateManager.isSprinting)
+        Block();
+
+        if (StateManager.isBlockHit && !beingHit)
+        {
+            beingHit = true;
+            StartCoroutine(BlockHit());
+        }
+
+        if (StateManager.isHit && !beingHit)
+        {
+            beingHit = true;
+            StartCoroutine(Hit());
+        }
+
+        if (StateManager.isAttacking && !attacking && StateManager.isArmed && !StateManager.isSprinting)
         {
             attacking = true;
             StartCoroutine(Attack());
@@ -39,37 +54,24 @@ public class PlayerAnimations : MonoBehaviour
             attacking = true;
             StartCoroutine(Kick());
         }
+
     }
 
-    void Idle()
+    void SetMovementState()
     {
-        anim.SetBool("Sprinting", false);
-        anim.SetBool("Moving", false);
-        anim.SetBool("Idle", true);
-    }
-
-    void Moving()
-    {
-        anim.SetBool("Sprinting", false);
-        anim.SetBool("Idle", false);
-        anim.SetBool("Moving", true);
-    }
-
-    void Sprinting()
-    {
-        anim.SetBool("Idle", false);
-        anim.SetBool("Moving", false);
-        anim.SetBool("Sprinting", true);
+        anim.SetBool("Sprinting", StateManager.isSprinting);
+        anim.SetBool("Moving", StateManager.isMoving);
+        anim.SetBool("Idle", StateManager.isIdle);
     }
 
     void ChangeWeapon()
     {
         if(StateManager.previousWeapon == 0)
-            anim.SetLayerWeight(StateManager.previousWeapon, .5f);
+            anim.SetLayerWeight(StateManager.previousWeapon + 1, .5f);
         else
-            anim.SetLayerWeight(StateManager.previousWeapon, 0);
+            anim.SetLayerWeight(StateManager.previousWeapon + 1, 0);
 
-        anim.SetLayerWeight(StateManager.currentWeapon, 1);
+        anim.SetLayerWeight(StateManager.currentWeapon + 1, 1);
     }
 
     IEnumerator Attack()
@@ -96,5 +98,54 @@ public class PlayerAnimations : MonoBehaviour
         yield return new WaitForSeconds(weaponManager.CurrentWeapon().globalCooldown);
         anim.SetFloat("Kick", 0);
         attacking = false;
+    }
+
+    void Block()
+    {
+        anim.SetBool("Block", StateManager.isBlocking);
+    }
+
+    IEnumerator BlockHit()
+    {
+        int randomHit = 0;
+        if(StateManager.currentWeapon != 0)
+            randomHit = Random.Range(0, weaponManager.CurrentWeapon().numberOfHits);
+        else
+            randomHit = Random.Range(0, 2);
+
+        anim.SetFloat("BlockHit", randomHit);
+        yield return new WaitForSeconds(.5f);
+        anim.SetFloat("BlockHit", 0);
+        StateManager.isBlockHit = false;
+        beingHit = false;
+    }
+
+    IEnumerator Hit()
+    {
+        int randomHit = 0;
+        if (StateManager.currentWeapon != 0)
+            randomHit = Random.Range(0, weaponManager.CurrentWeapon().numberOfHits);
+        else
+            randomHit = Random.Range(0, 5);
+
+        anim.SetFloat("Hit", randomHit);
+        yield return new WaitForSeconds(.5f);
+        anim.SetFloat("Hit", 0);
+        StateManager.isHit = false;
+        beingHit = false;
+    }
+
+    void Died()
+    {
+        hasDied = true;
+        anim.SetBool("Died", true);
+        hasRevived = false;
+    }
+
+    public void Revive()
+    {
+        anim.SetBool("Died", false);
+        hasDied = false;
+        hasRevived = true;
     }
 }

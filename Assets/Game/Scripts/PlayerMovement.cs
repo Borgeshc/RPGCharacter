@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (StateManager.isDead) return;
+
         if (!StateManager.isSprinting)
         {
             if(Camera.main.fieldOfView != 60)

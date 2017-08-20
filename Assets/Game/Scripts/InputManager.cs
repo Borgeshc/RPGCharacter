@@ -45,7 +45,11 @@ public class InputManager : MonoBehaviour
                 currentWeapon = 0;
 
             StateManager.currentWeapon = currentWeapon;
-            weaponManager.ChangeWeapon();
+            if(!StateManager.isChangingWeapon)
+            {
+                StateManager.isChangingWeapon = true;
+                StartCoroutine(weaponManager.ChangeWeapon());
+            }
         }
 
         if (inputDevice.LeftBumper.WasPressed && !StateManager.isAttacking && !StateManager.isBlocking)
@@ -58,7 +62,11 @@ public class InputManager : MonoBehaviour
                 currentWeapon = weaponManager.amountOfWeapons;
 
             StateManager.currentWeapon = currentWeapon;
-            weaponManager.ChangeWeapon();
+            if (!StateManager.isChangingWeapon)
+            {
+                StateManager.isChangingWeapon = true;
+                StartCoroutine(weaponManager.ChangeWeapon());
+            }
         }
 
         if (currentWeapon == 0)

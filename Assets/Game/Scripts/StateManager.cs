@@ -17,6 +17,7 @@ public class StateManager
     public static bool isKicking;
     public static bool isArmed;
     public static bool timeToRevive;
+    public static bool isChangingWeapon;
 
     public static float leftStickInputX;
     public static float leftStickInputY;

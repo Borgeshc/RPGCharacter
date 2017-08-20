@@ -11,6 +11,7 @@ public class PlayerAnimations : MonoBehaviour
     bool hasDied;
     bool hasRevived;
     bool beingHit;
+    bool changingWeapon;
 
     private void Start()
     {
@@ -27,8 +28,14 @@ public class PlayerAnimations : MonoBehaviour
             Died();
         else if(StateManager.isDead) return;
 
+        if(!changingWeapon)
+        {
+            changingWeapon = true;
+            StartCoroutine(ChangeWeapon());
+        }
+
+        WeaponChangeState();
         SetMovementState();
-        ChangeWeapon();
         Block();
 
         if (StateManager.isBlockHit && !beingHit)
@@ -64,14 +71,32 @@ public class PlayerAnimations : MonoBehaviour
         anim.SetBool("Idle", StateManager.isIdle);
     }
 
-    void ChangeWeapon()
+    void WeaponChangeState()
     {
+        anim.SetBool("ChangingWeapon", StateManager.isChangingWeapon);
+    }
+
+    IEnumerator ChangeWeapon()
+    {
+        if (StateManager.currentWeapon != 0)
+        {
+            anim.SetBool("Sheath", true);
+
+            yield return new WaitForSeconds(.5f);
+        }
+
         if(StateManager.previousWeapon == 0)
             anim.SetLayerWeight(StateManager.previousWeapon + 1, .5f);
         else
             anim.SetLayerWeight(StateManager.previousWeapon + 1, 0);
 
         anim.SetLayerWeight(StateManager.currentWeapon + 1, 1);
+
+        if (StateManager.currentWeapon != 0)
+            anim.SetBool("Sheath", false);
+
+        yield return new WaitForSeconds(.5f);
+        changingWeapon = false;
     }
 
     IEnumerator Attack()

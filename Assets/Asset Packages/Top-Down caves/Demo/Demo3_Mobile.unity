@@ -8985,7 +8985,7 @@ GameObject:
   - component: {fileID: 276333728}
   - component: {fileID: 276333727}
   - component: {fileID: 276333726}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16743,6 +16743,31 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4222306154153260, guid: cf8944595930c6c4c8b8f58200362f0e, type: 2}
       propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114329328922448336, guid: cf8944595930c6c4c8b8f58200362f0e,
+        type: 2}
+      propertyPath: groundLayer.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 114329328922448336, guid: cf8944595930c6c4c8b8f58200362f0e,
+        type: 2}
+      propertyPath: jumpForce
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 114329328922448336, guid: cf8944595930c6c4c8b8f58200362f0e,
+        type: 2}
+      propertyPath: groundCheckDistance
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449696648066678, guid: cf8944595930c6c4c8b8f58200362f0e,
+        type: 2}
+      propertyPath: spineBend
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114329328922448336, guid: cf8944595930c6c4c8b8f58200362f0e,
+        type: 2}
+      propertyPath: gravity
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []

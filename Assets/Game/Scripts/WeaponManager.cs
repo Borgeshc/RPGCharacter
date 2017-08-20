@@ -14,13 +14,17 @@ public class WeaponManager : MonoBehaviour
         amountOfWeapons = myWeapons.Length;
     }
 
-    public void ChangeWeapon()
+    public IEnumerator ChangeWeapon()
     {
+        yield return new WaitForSeconds(.5f);
         if(StateManager.previousWeapon != 0)
             myWeapons[StateManager.previousWeapon - 1].gameObject.SetActive(false);
 
+        yield return new WaitForSeconds(.5f);
         if(StateManager.currentWeapon != 0)
             myWeapons[StateManager.currentWeapon - 1].gameObject.SetActive(true);
+
+        StateManager.isChangingWeapon = false;
     }
 
     public Weapon CurrentWeapon()

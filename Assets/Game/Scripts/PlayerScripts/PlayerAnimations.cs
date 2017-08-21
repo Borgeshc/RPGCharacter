@@ -34,8 +34,6 @@ public class PlayerAnimations : MonoBehaviour
             StartCoroutine(ChangeWeapon());
         }
 
-        print("Sheath " + anim.GetBool("Sheath"));
-
         WeaponChangeState();
         SetMovementState();
         Block();
